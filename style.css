@@ -1,0 +1,23 @@
+/* style.css - simple clean styling */
+
+:root{
+  --accent: #0E5484;
+  --soft: #f5f8fb;
+}
+
+body{
+  background: linear-gradient(180deg, #ffffff 0%, var(--soft) 100%);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #222;
+}
+
+.navbar-brand { color: var(--accent); }
+.card { border-radius: 10px; }
+.list-group-item { border: none; }
+#notificationList .list-group-item { background: transparent; padding-left: 0; padding-right: 0; }
+
+.form-card-title { font-weight: 600; color: var(--accent); }
+.small-muted { color: #6c757d; }
+.submission { border-left: 3px solid #e9ecef; padding: 12px; margin-bottom: 10px; border-radius: 6px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+
+.btn-outline-primary { border-radius: 6px; }
