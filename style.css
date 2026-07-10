@@ -1,14 +1,15 @@
 :root {
   --bg: #f4f7fb;
-  --panel: #ffffff;
-  --border: #dbe4ef;
+  --panel: #fff7fb;
+  --panel-soft: #fffafe;
+  --border: #ead3df;
   --primary: #1f65d6;
   --primary-soft: #eaf2ff;
   --success: #14845c;
   --warning: #a16207;
   --text: #172033;
   --muted: #667085;
-  --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --shadow: 0 10px 24px rgba(99, 52, 78, 0.08);
 }
 
 * {
@@ -99,16 +100,16 @@ body {
 }
 
 .page-content {
-  padding: 20px 0 48px;
+  padding: 18px 0 42px;
 }
 
 .metric-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
-  padding: 16px 18px;
-  border-radius: 14px;
+  min-height: 60px;
+  padding: 12px 16px;
+  border-radius: 12px;
 }
 
 .metric-card span {
@@ -117,12 +118,12 @@ body {
 }
 
 .metric-card strong {
-  font-size: 1.8rem;
+  font-size: 1.45rem;
 }
 
 .panel-card {
-  padding: 20px;
-  border-radius: 14px;
+  padding: 16px;
+  border-radius: 12px;
 }
 
 .section-row {
@@ -138,8 +139,8 @@ body {
 }
 
 .section-title {
-  margin-bottom: 16px;
-  font-size: 1.05rem;
+  margin-bottom: 12px;
+  font-size: 1rem;
   font-weight: 800;
 }
 
@@ -148,7 +149,7 @@ body {
   border-bottom: 1px solid #edf1f7;
   background: transparent;
   color: var(--text);
-  padding: 12px 0;
+  padding: 9px 0;
 }
 
 .list-group-item:last-child {
@@ -162,7 +163,7 @@ body {
 
 .form-card {
   height: 100%;
-  padding: 16px;
+  padding: 14px;
   border-radius: 12px;
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
@@ -205,7 +206,7 @@ body {
 }
 
 .submission {
-  padding: 14px;
+  padding: 12px;
   margin-bottom: 10px;
   border-left: 4px solid var(--primary);
   border-radius: 12px;
@@ -213,19 +214,20 @@ body {
 
 .ai-results {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
 .ai-card {
-  padding: 14px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #f8fbff;
+  background: var(--panel-soft);
 }
 
 .ai-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 6px 14px;
   color: var(--muted);
   font-size: 0.88rem;
@@ -297,6 +299,12 @@ body {
   }
 
   .ai-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  .ai-results {
     grid-template-columns: 1fr;
   }
 }
