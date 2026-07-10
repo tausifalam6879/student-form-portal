@@ -6,25 +6,39 @@
   <title>CampusConnect - Central Opportunity Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=d02982" />
+  <link rel="stylesheet" href="style.css?v=guide-d02982" />
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg portal-nav">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">CampusConnect</a>
-      <div class="nav-actions">
-        <button id="exportBtn" class="btn btn-sm btn-outline-primary" title="Export saved interests as JSON">
-          <i class="fa fa-file-export"></i> Export
+  <div class="app-shell">
+    <nav class="portal-nav">
+      <a class="brand-lockup" href="#">
+        <span class="brand-mark"><i class="fa fa-graduation-cap"></i></span>
+        <span>Campus<strong>Connect</strong></span>
+      </a>
+
+      <div class="nav-links">
+        <a class="active" href="#"><i class="fa fa-house"></i> Dashboard</a>
+        <a href="#opportunities"><i class="fa fa-border-all"></i> Opportunities</a>
+        <a href="#opportunities"><i class="fa fa-code"></i> Hackathons</a>
+        <a href="#saved"><i class="fa-regular fa-bookmark"></i> Saved</a>
+      </div>
+
+      <div class="profile-chip">
+        <span>TA</span>
+        <strong>Hi, Tausif</strong>
+      </div>
+    </nav>
+
+    <header class="hero-section">
+      <div class="hero-actions">
+        <button id="exportBtn" class="btn secondary-action" title="Export saved interests as JSON">
+          <i class="fa fa-download"></i> Export
         </button>
-        <button id="clearBtn" class="btn btn-sm btn-outline-danger" title="Clear saved demo data">
+        <button id="clearBtn" class="btn primary-action" title="Clear saved demo data">
           <i class="fa fa-trash"></i> Clear
         </button>
       </div>
-    </div>
-  </nav>
 
-  <header class="hero-section">
-    <div class="container">
       <span class="hero-badge">College Placement - Internship - Hackathon Updates</span>
       <h1>Central campus opportunity portal for every department.</h1>
       <p>
@@ -32,126 +46,167 @@
         internship drives, placement forms, and hackathons in one official place so
         no department misses an important opportunity.
       </p>
+
       <div class="hero-stats">
-        <span><strong>CSV</strong> opportunity data</span>
-        <span><strong>All</strong> departments covered</span>
-        <span><strong>AI demo</strong> recommendations</span>
-        <span><strong>MySQL</strong> schema included</span>
+        <span><i class="fa-regular fa-file-lines"></i> CSV opportunity data</span>
+        <span><i class="fa fa-users"></i> All departments covered</span>
+        <span><i class="fa fa-wand-magic-sparkles"></i> AI demo recommendations</span>
+        <span><i class="fa fa-database"></i> MySQL schema included</span>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="container page-content">
-    <section class="row g-3 mb-3">
-      <div class="col-md-4">
-        <div class="metric-card">
-          <span>Open Drives</span>
-          <strong id="openDrivesCount">0</strong>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="metric-card">
-          <span>Hackathons</span>
-          <strong id="hackathonCount">0</strong>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="metric-card">
-          <span>Saved Interests</span>
-          <strong id="savedCount">0</strong>
-        </div>
-      </div>
-    </section>
-
-    <section class="row g-3 mb-3">
-      <div class="col-lg-7">
-        <div class="panel-card">
-          <h2 class="section-title">Latest College Updates</h2>
-          <ul id="notificationList" class="list-group list-group-flush"></ul>
-        </div>
-      </div>
-
-      <div class="col-lg-5">
-        <div class="panel-card h-100">
-          <h2 class="section-title">Why This Project?</h2>
-          <p class="text-muted mb-0">
-            In many colleges, opportunities are shared department-wise. If one group
-            misses a form, students may lose the chance. This portal centralizes all
-            placement, internship, and hackathon updates with clear deadlines.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="row g-3">
-      <div class="col-12">
-        <div class="panel-card">
-          <div class="section-row">
+    <main class="page-content">
+      <section class="row g-4 metric-row">
+        <div class="col-md-4">
+          <div class="metric-card">
+            <span class="metric-icon"><i class="fa-regular fa-folder"></i></span>
             <div>
-              <h2 class="section-title mb-1">AI Recommendation Demo</h2>
-              <p class="text-muted mb-0 small">
-                Rule-based prototype for recommendations, eligibility, priority, skill gaps, and summaries.
+              <span>Open Drives</span>
+              <strong id="openDrivesCount">0</strong>
+              <small>Active opportunities</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="metric-card alt">
+            <span class="metric-icon"><i class="fa fa-code"></i></span>
+            <div>
+              <span>Hackathons</span>
+              <strong id="hackathonCount">0</strong>
+              <small>Upcoming & ongoing</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="metric-card">
+            <span class="metric-icon"><i class="fa-regular fa-bookmark"></i></span>
+            <div>
+              <span>Saved Interests</span>
+              <strong id="savedCount">0</strong>
+              <small>Opportunities saved</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row g-4 mt-1">
+        <div class="col-lg-6">
+          <div class="panel-card h-100">
+            <div class="section-row">
+              <h2 class="section-title mb-0"><span class="title-icon"><i class="fa fa-bullhorn"></i></span> Latest College Updates</h2>
+              <a class="text-link" href="#opportunities">View all</a>
+            </div>
+            <ul id="notificationList" class="list-group list-group-flush updates-list"></ul>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="panel-card why-card h-100">
+            <div>
+              <h2 class="section-title"><span class="title-icon"><i class="fa-regular fa-heart"></i></span> Why This Project?</h2>
+              <p class="text-muted mb-3">
+                In many colleges, opportunities are shared department-wise. If one group misses a form,
+                students may lose the chance.
+              </p>
+              <p class="text-muted mb-0">
+                This portal centralizes placement, internship, and hackathon updates with clear deadlines.
               </p>
             </div>
-            <button id="runAiBtn" class="btn btn-sm btn-primary">Analyze Profile</button>
-          </div>
-
-          <div class="row g-3 mt-2">
-            <div class="col-md-4">
-              <label for="aiDepartment" class="form-label">Department</label>
-              <select id="aiDepartment" class="form-select form-select-sm">
-                <option>MCA</option>
-                <option>Computer Science</option>
-                <option>Information Technology</option>
-                <option>Electronics</option>
-                <option>Mathematics</option>
-                <option>Mechanical</option>
-                <option>Civil</option>
-                <option>Electrical</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label for="aiSkills" class="form-label">Skills</label>
-              <input id="aiSkills" class="form-control form-control-sm" value="Java, SQL, Python" />
-            </div>
-            <div class="col-md-4">
-              <label for="aiInterest" class="form-label">Interest</label>
-              <select id="aiInterest" class="form-select form-select-sm">
-                <option>Placement</option>
-                <option>Internship</option>
-                <option>Hackathon</option>
-                <option>AI/Data Science</option>
-              </select>
+            <div class="campus-art" aria-hidden="true">
+              <span class="tree left"></span>
+              <span class="student one"></span>
+              <span class="building"></span>
+              <span class="student two"></span>
+              <span class="student three"></span>
+              <span class="tree right"></span>
             </div>
           </div>
-
-          <div id="aiResults" class="ai-results mt-3"></div>
         </div>
-      </div>
+      </section>
 
-      <div class="col-12">
-        <div class="panel-card">
-          <div class="section-row">
-            <h2 class="section-title mb-0">Opportunity Board</h2>
-            <select id="typeFilter" class="form-select form-select-sm">
-              <option value="all">All Updates</option>
-              <option value="Placement">Placement</option>
-              <option value="Internship">Internship</option>
-              <option value="Hackathon">Hackathon</option>
+      <section class="panel-card mt-4">
+        <div class="section-row">
+          <div>
+            <h2 class="section-title mb-1"><span class="title-icon"><i class="fa fa-wand-magic-sparkles"></i></span> AI Recommendation Demo</h2>
+            <p class="text-muted mb-0 small">
+              Rule-based prototype for recommendations, eligibility, priority, skill gaps, and summaries.
+            </p>
+          </div>
+          <button id="runAiBtn" class="btn primary-action">Analyze Profile</button>
+        </div>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-4">
+            <label for="aiDepartment" class="form-label">Department</label>
+            <select id="aiDepartment" class="form-select">
+              <option>MCA</option>
+              <option>Computer Science</option>
+              <option>Information Technology</option>
+              <option>Electronics</option>
+              <option>Mathematics</option>
+              <option>Mechanical</option>
+              <option>Civil</option>
+              <option>Electrical</option>
             </select>
           </div>
-          <div id="formsContainer" class="row g-4 mt-1"></div>
+          <div class="col-md-4">
+            <label for="aiSkills" class="form-label">Skills</label>
+            <input id="aiSkills" class="form-control" value="Java, SQL, Python" />
+          </div>
+          <div class="col-md-4">
+            <label for="aiInterest" class="form-label">Interest</label>
+            <select id="aiInterest" class="form-select">
+              <option>Placement</option>
+              <option>Internship</option>
+              <option>Hackathon</option>
+              <option>AI/Data Science</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div class="col-12">
-        <div class="panel-card">
-          <h2 class="section-title">Saved Student Interests</h2>
-          <div id="submissionsContainer"></div>
+        <div id="aiResults" class="ai-results mt-3"></div>
+      </section>
+
+      <section id="opportunities" class="panel-card mt-4">
+        <div class="section-row">
+          <h2 class="section-title mb-0"><span class="title-icon"><i class="fa fa-border-all"></i></span> Opportunity Board</h2>
+          <select id="typeFilter" class="form-select board-filter">
+            <option value="all">All Updates</option>
+            <option value="Placement">Placement</option>
+            <option value="Internship">Internship</option>
+            <option value="Hackathon">Hackathon</option>
+          </select>
+        </div>
+        <div id="formsContainer" class="row g-4 mt-1"></div>
+      </section>
+
+      <section id="saved" class="panel-card mt-4">
+        <h2 class="section-title">Saved Student Interests</h2>
+        <div id="submissionsContainer"></div>
+      </section>
+    </main>
+
+    <footer class="portal-footer">
+      <div class="brand-lockup small-brand">
+        <span class="brand-mark"><i class="fa fa-graduation-cap"></i></span>
+        <div>
+          <strong>CampusConnect</strong>
+          <small>Empowering students. Connecting opportunities.</small>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#opportunities">How It Works</a>
+        <a href="#saved">Saved</a>
+        <a href="#">Help</a>
+      </div>
+      <div class="footer-icons">
+        <i class="fa-brands fa-linkedin"></i>
+        <i class="fa-brands fa-github"></i>
+        <i class="fa-regular fa-envelope"></i>
+      </div>
+    </footer>
+  </div>
 
   <div class="modal fade" id="formModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -192,7 +247,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save Interest</button>
+            <button type="submit" class="btn primary-action">Save Interest</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </form>
@@ -201,6 +256,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js?v=d02982"></script>
+  <script src="script.js?v=guide-d02982"></script>
 </body>
 </html>
