@@ -1,15 +1,16 @@
 :root {
   --bg: #f4f7fb;
-  --panel: #fff7fb;
-  --panel-soft: #fffafe;
-  --border: #ead3df;
+  --panel: #fff0f7;
+  --panel-soft: #fff7fc;
+  --card-panel: #fff3fa;
+  --border: #e7bfd2;
   --primary: #1f65d6;
   --primary-soft: #eaf2ff;
   --success: #14845c;
   --warning: #a16207;
   --text: #172033;
   --muted: #667085;
-  --shadow: 0 10px 24px rgba(99, 52, 78, 0.08);
+  --shadow: 0 10px 24px rgba(143, 69, 108, 0.1);
 }
 
 * {
@@ -126,6 +127,11 @@ body {
   border-radius: 12px;
 }
 
+#formsContainer {
+  --bs-gutter-x: 2rem;
+  --bs-gutter-y: 1.5rem;
+}
+
 .section-row {
   display: flex;
   align-items: center;
@@ -165,6 +171,7 @@ body {
   height: 100%;
   padding: 14px;
   border-radius: 12px;
+  background: var(--card-panel);
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
@@ -172,7 +179,7 @@ body {
 .form-card:hover,
 .form-card:focus {
   transform: translateY(-3px);
-  border-color: #9ec1ff;
+  border-color: #d58caf;
   outline: none;
 }
 
@@ -215,7 +222,7 @@ body {
 .ai-results {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 16px;
 }
 
 .ai-card {
