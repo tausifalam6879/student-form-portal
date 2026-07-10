@@ -19,19 +19,22 @@ CampusConnect solves this by keeping all placement, internship, and hackathon up
 - Lists hackathon opportunities for all departments
 - Shows eligible departments for each opportunity
 - Allows students to save interest in an opportunity
+- Provides an AI-style recommendation demo based on department, skills, and interest
+- Shows eligibility matching, deadline priority, skill gaps, and short opportunity summaries
 - Stores saved demo data in browser localStorage
 - Includes a MySQL schema for future database integration
 
-## AI Scope
+## AI / Data Science Features
 
-The current live demo is a frontend prototype. In a future version, AI can help with:
+The current live demo includes a frontend rule-based AI prototype. It does not use a paid AI API or train a machine learning model yet. The demo applies simple scoring and matching logic to show how AI/Data Science can support campus opportunity discovery.
 
-- Matching students with relevant opportunities based on department and skills
-- Highlighting urgent deadlines
-- Suggesting suitable hackathons and internships
-- Summarizing company eligibility criteria
+- Opportunity recommendation based on department, skills, and interest
+- Eligibility matching between student department and opportunity criteria
+- Deadline priority based on remaining days
+- Skill gap analysis by comparing required skills with student skills
+- Short summary generation for each recommended opportunity
 
-No fake AI model is claimed in this version.
+This can later be upgraded with a real ML model or AI API for smarter recommendations and automatic notice summarization.
 
 ## Tech Stack
 

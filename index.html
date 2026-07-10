@@ -35,6 +35,7 @@
       <div class="hero-stats">
         <span><strong>5</strong> active updates</span>
         <span><strong>All</strong> departments covered</span>
+        <span><strong>AI demo</strong> recommendations</span>
         <span><strong>MySQL</strong> schema included</span>
       </div>
     </div>
@@ -80,6 +81,48 @@
       </div>
 
       <div class="col-lg-8">
+        <div class="panel-card mb-4">
+          <div class="section-row">
+            <div>
+              <h2 class="section-title mb-1">AI Recommendation Demo</h2>
+              <p class="text-muted mb-0 small">
+                Rule-based prototype for recommendations, eligibility, priority, skill gaps, and summaries.
+              </p>
+            </div>
+            <button id="runAiBtn" class="btn btn-sm btn-primary">Analyze Profile</button>
+          </div>
+
+          <div class="row g-3 mt-2">
+            <div class="col-md-4">
+              <label for="aiDepartment" class="form-label">Department</label>
+              <select id="aiDepartment" class="form-select form-select-sm">
+                <option>MCA</option>
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Electrical</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="aiSkills" class="form-label">Skills</label>
+              <input id="aiSkills" class="form-control form-control-sm" value="Java, SQL, Python" />
+            </div>
+            <div class="col-md-4">
+              <label for="aiInterest" class="form-label">Interest</label>
+              <select id="aiInterest" class="form-select form-select-sm">
+                <option>Placement</option>
+                <option>Internship</option>
+                <option>Hackathon</option>
+                <option>AI/Data Science</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="aiResults" class="ai-results mt-3"></div>
+        </div>
+
         <div class="panel-card mb-4">
           <div class="section-row">
             <h2 class="section-title mb-0">Opportunity Board</h2>
