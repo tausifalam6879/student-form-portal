@@ -2,6 +2,10 @@
 
 A simple web portal for students to submit AI/ML workshop registrations, dataset ideas, mini-project proposals, and learning feedback.
 
+## Live Demo
+
+[Open Live Demo](https://tausifalam6879.github.io/student-form-portal/)
+
 This project is intentionally lightweight. It does not claim to run a real AI model. The AI/Data Science theme is focused on collecting learning forms, dataset ideas, and project proposals using HTML, CSS, JavaScript, and a MySQL schema.
 
 ## Features
