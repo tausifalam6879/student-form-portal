@@ -1,50 +1,66 @@
-/* script.js - frontend demo with localStorage */
-
 const notifications = [
-  { title: "Hackathon Registration Open", message: "Apply before Sept 25th" },
-  { title: "Internship Drive", message: "Top companies visiting campus next month" },
-  { title: "AI Workshop", message: "Hands-on AI/ML workshop — limited seats" }
+  {
+    title: "AI/ML Workshop Registration Open",
+    message: "Students can register for a beginner-friendly machine learning session."
+  },
+  {
+    title: "Dataset Collection Drive",
+    message: "Submit simple dataset ideas for classification, prediction, or analysis projects."
+  },
+  {
+    title: "Data Science Mini Project Review",
+    message: "Share your project idea and get it listed for mentor review."
+  }
 ];
 
 const forms = [
-  { title: "Event Participation Form", description: "Register to participate in upcoming college events." },
-  { title: "Internship Application", description: "Apply for internship opportunities posted by the placement cell." },
-  { title: "Feedback Form", description: "Give your feedback about college workshops and sessions." }
+  {
+    title: "AI Workshop Registration",
+    description: "Register your interest for an introductory AI/ML learning session."
+  },
+  {
+    title: "Dataset Idea Submission",
+    description: "Submit a dataset idea that can be used for analysis or machine learning practice."
+  },
+  {
+    title: "Mini Project Proposal",
+    description: "Share a simple AI, ML, or data science project idea for review."
+  },
+  {
+    title: "Learning Feedback Form",
+    description: "Give feedback about AI sessions, datasets, or project guidance."
+  }
 ];
 
-// Keys for localStorage
-const STORAGE_KEY = "student_portal_submissions_v1";
+const STORAGE_KEY = "ai_learning_portal_submissions_v1";
 
-// Render notifications
 function renderNotifications() {
   const list = document.getElementById("notificationList");
   list.innerHTML = "";
-  notifications.forEach(n => {
+
+  notifications.forEach((notification) => {
     const li = document.createElement("li");
     li.className = "list-group-item";
-    li.innerHTML = `<div><strong>${n.title}</strong><div class="small text-muted">${n.message}</div></div>`;
+    li.innerHTML = `
+      <strong>${escapeHtml(notification.title)}</strong>
+      <div class="small text-muted">${escapeHtml(notification.message)}</div>
+    `;
     list.appendChild(li);
   });
 }
 
-// Render forms
 function renderForms() {
   const container = document.getElementById("formsContainer");
   container.innerHTML = "";
-  forms.forEach((f, idx) => {
+
+  forms.forEach((form, index) => {
     const col = document.createElement("div");
     col.className = "col-md-6";
     col.innerHTML = `
-      <div class="card p-3">
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <h6 class="form-card-title">${f.title}</h6>
-            <p class="mb-1 small-muted">${f.description}</p>
-          </div>
-          <div>
-            <button class="btn btn-sm btn-success" onclick="openForm(${idx})">Fill</button>
-          </div>
-        </div>
+      <div class="form-card p-3">
+        <h3 class="form-card-title h6">${escapeHtml(form.title)}</h3>
+        <p class="mb-3 small-muted">${escapeHtml(form.description)}</p>
+        <button class="btn btn-sm btn-success" onclick="openForm(${index})">Fill Form</button>
       </div>
     `;
     container.appendChild(col);
@@ -53,11 +69,9 @@ function renderForms() {
 
 let currentModalInstance = null;
 
-// Open modal for a form
 function openForm(index) {
   document.getElementById("form_id").value = index;
   document.getElementById("formTitle").innerText = forms[index].title;
-  // reset fields
   document.getElementById("student_name").value = "";
   document.getElementById("student_email").value = "";
   document.getElementById("student_response").value = "";
@@ -67,45 +81,41 @@ function openForm(index) {
   currentModalInstance.show();
 }
 
-// Save submission to localStorage
-function saveSubmission(sub) {
+function saveSubmission(submission) {
   const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  all.unshift(sub);
+  all.unshift(submission);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
 }
 
-// Load and render submissions
 function renderSubmissions() {
   const container = document.getElementById("submissionsContainer");
   const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   container.innerHTML = "";
 
   if (all.length === 0) {
-    container.innerHTML = `<div class="text-muted">No submissions yet. Fill a form to see your responses here.</div>`;
+    container.innerHTML = `<div class="text-muted">No submissions yet. Fill a form to see saved responses here.</div>`;
     return;
   }
 
-  all.forEach((s, i) => {
+  all.forEach((submission, index) => {
+    const form = forms[submission.form_id] || { title: "AI Portal Form" };
     const div = document.createElement("div");
     div.className = "submission";
     div.innerHTML = `
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between gap-3">
         <div>
-          <strong>${forms[s.form_id].title}</strong>
-          <div class="small text-muted">${new Date(s.created_at).toLocaleString()}</div>
+          <strong>${escapeHtml(form.title)}</strong>
+          <div class="small text-muted">${new Date(submission.created_at).toLocaleString()}</div>
         </div>
-        <div>
-          <button class="btn btn-sm btn-outline-danger" onclick="deleteSubmission(${i})">Delete</button>
-        </div>
+        <button class="btn btn-sm btn-outline-warning" onclick="deleteSubmission(${index})">Delete</button>
       </div>
-      <div class="mt-2"><strong>${escapeHtml(s.name)}</strong> • ${escapeHtml(s.email)}</div>
-      <div class="mt-2">${escapeHtml(s.response)}</div>
+      <div class="mt-2"><strong>${escapeHtml(submission.name)}</strong> - ${escapeHtml(submission.email)}</div>
+      <div class="mt-2">${escapeHtml(submission.response)}</div>
     `;
     container.appendChild(div);
   });
 }
 
-// Delete a specific submission by index
 function deleteSubmission(index) {
   const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   all.splice(index, 1);
@@ -113,37 +123,41 @@ function deleteSubmission(index) {
   renderSubmissions();
 }
 
-// Clear all submissions
 function clearAllSubmissions() {
-  if (!confirm("Are you sure you want to delete all submissions?")) return;
+  if (!confirm("Delete all saved demo submissions?")) return;
   localStorage.removeItem(STORAGE_KEY);
   renderSubmissions();
 }
 
-// Export submissions (download as JSON)
 function exportSubmissions() {
   const data = localStorage.getItem(STORAGE_KEY) || "[]";
   const blob = new Blob([data], { type: "application/json" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "submissions.json";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "ai-learning-submissions.json";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
   URL.revokeObjectURL(url);
 }
 
-// Escape HTML to avoid injection (safe display)
 function escapeHtml(text) {
-  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-  return (text || "").replace(/[&<>"']/g, function(m){ return map[m]; });
+  const map = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  };
+
+  return String(text || "").replace(/[&<>"']/g, (char) => map[char]);
 }
 
-// Handle form submit
-document.getElementById("studentForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const formId = parseInt(document.getElementById("form_id").value, 10);
+document.getElementById("studentForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formId = Number.parseInt(document.getElementById("form_id").value, 10);
   const name = document.getElementById("student_name").value.trim();
   const email = document.getElementById("student_email").value.trim();
   const response = document.getElementById("student_response").value.trim();
@@ -153,33 +167,27 @@ document.getElementById("studentForm").addEventListener("submit", function(e) {
     return;
   }
 
-  const submission = {
+  saveSubmission({
     form_id: formId,
     name,
     email,
     response,
     created_at: new Date().toISOString()
-  };
+  });
 
-  saveSubmission(submission);
-
-  // hide modal
   if (currentModalInstance) {
     currentModalInstance.hide();
   }
 
-  // show success (simple alert)
   setTimeout(() => {
-    alert("✅ Response submitted successfully!");
+    alert("Response submitted successfully.");
     renderSubmissions();
   }, 200);
 });
 
-// Hook up top buttons
 document.getElementById("clearBtn").addEventListener("click", clearAllSubmissions);
 document.getElementById("exportBtn").addEventListener("click", exportSubmissions);
 
-// Initialize UI
 renderNotifications();
 renderForms();
 renderSubmissions();
