@@ -1,38 +1,62 @@
 const notifications = [
   {
-    title: "AI/ML Workshop Registration Open",
-    message: "Students can register for a beginner-friendly machine learning session."
+    title: "TCS Ninja campus drive form is open",
+    message: "Eligible students from MCA, CSE, IT, and ECE can save interest before 12 Aug."
   },
   {
-    title: "Dataset Collection Drive",
-    message: "Submit simple dataset ideas for classification, prediction, or analysis projects."
+    title: "Smart India Hackathon internal registration",
+    message: "Team submissions are open for all departments. Shortlisting will happen department-wise."
   },
   {
-    title: "Data Science Mini Project Review",
-    message: "Share your project idea and get it listed for mentor review."
+    title: "AI internship opportunity shared by placement cell",
+    message: "Students interested in Python, data analysis, and basic ML can apply from the portal."
   }
 ];
 
-const forms = [
+const opportunities = [
   {
-    title: "AI Workshop Registration",
-    description: "Register your interest for an introductory AI/ML learning session."
+    title: "TCS Ninja Campus Drive",
+    type: "Placement",
+    department: "MCA, CSE, IT, ECE",
+    deadline: "12 Aug 2026",
+    eligibility: "Final-year students with basic programming and aptitude preparation.",
+    description: "Central listing for the company visit so every eligible department can see and track the form."
   },
   {
-    title: "Dataset Idea Submission",
-    description: "Submit a dataset idea that can be used for analysis or machine learning practice."
+    title: "AI/Data Analyst Internship",
+    type: "Internship",
+    department: "MCA, CSE, IT, Mathematics",
+    deadline: "18 Aug 2026",
+    eligibility: "Python basics, SQL basics, and interest in data analysis.",
+    description: "Internship update for students who want to work on datasets, dashboards, and AI-assisted analysis."
   },
   {
-    title: "Mini Project Proposal",
-    description: "Share a simple AI, ML, or data science project idea for review."
+    title: "Smart India Hackathon Registration",
+    type: "Hackathon",
+    department: "All Departments",
+    deadline: "20 Aug 2026",
+    eligibility: "Teams of students with a project idea and problem statement preference.",
+    description: "Hackathon notice board entry so all branches can form teams without depending on separate groups."
   },
   {
-    title: "Learning Feedback Form",
-    description: "Give feedback about AI sessions, datasets, or project guidance."
+    title: "Startup Product Challenge",
+    type: "Hackathon",
+    department: "All Departments",
+    deadline: "28 Aug 2026",
+    eligibility: "Students with web, app, AI, design, or presentation skills.",
+    description: "A college-level innovation challenge for building practical prototypes and pitching ideas."
+  },
+  {
+    title: "Java Full Stack Trainee Drive",
+    type: "Placement",
+    department: "MCA, CSE, IT",
+    deadline: "02 Sep 2026",
+    eligibility: "Java, OOPS, DBMS, SQL, and basic web development knowledge.",
+    description: "Company update for Java trainee roles with placement form visibility across eligible departments."
   }
 ];
 
-const STORAGE_KEY = "ai_learning_portal_submissions_v1";
+const STORAGE_KEY = "campusconnect_saved_interests_v1";
 
 function renderNotifications() {
   const list = document.getElementById("notificationList");
@@ -49,18 +73,30 @@ function renderNotifications() {
   });
 }
 
-function renderForms() {
+function renderOpportunities() {
   const container = document.getElementById("formsContainer");
+  const selectedType = document.getElementById("typeFilter").value;
+  const filtered = selectedType === "all"
+    ? opportunities
+    : opportunities.filter((opportunity) => opportunity.type === selectedType);
+
   container.innerHTML = "";
 
-  forms.forEach((form, index) => {
+  filtered.forEach((opportunity) => {
+    const index = opportunities.indexOf(opportunity);
     const col = document.createElement("div");
     col.className = "col-md-6";
     col.innerHTML = `
-      <div class="form-card p-3">
-        <h3 class="form-card-title h6">${escapeHtml(form.title)}</h3>
-        <p class="mb-3 small-muted">${escapeHtml(form.description)}</p>
-        <button class="btn btn-sm btn-success" onclick="openForm(${index})">Fill Form</button>
+      <div class="form-card">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <h3 class="form-card-title h6">${escapeHtml(opportunity.title)}</h3>
+          <span class="badge-type">${escapeHtml(opportunity.type)}</span>
+        </div>
+        <p class="mb-2 small-muted">${escapeHtml(opportunity.description)}</p>
+        <div class="detail-line"><i class="fa fa-building-columns"></i><span>${escapeHtml(opportunity.department)}</span></div>
+        <div class="detail-line"><i class="fa fa-calendar-days"></i><span>Deadline: ${escapeHtml(opportunity.deadline)}</span></div>
+        <div class="detail-line"><i class="fa fa-check-circle"></i><span>${escapeHtml(opportunity.eligibility)}</span></div>
+        <button class="btn btn-sm btn-success mt-3" onclick="openForm(${index})">Save Interest</button>
       </div>
     `;
     container.appendChild(col);
@@ -71,9 +107,10 @@ let currentModalInstance = null;
 
 function openForm(index) {
   document.getElementById("form_id").value = index;
-  document.getElementById("formTitle").innerText = forms[index].title;
+  document.getElementById("formTitle").innerText = opportunities[index].title;
   document.getElementById("student_name").value = "";
   document.getElementById("student_email").value = "";
+  document.getElementById("student_department").value = "";
   document.getElementById("student_response").value = "";
 
   const modalEl = document.getElementById("formModal");
@@ -92,28 +129,35 @@ function renderSubmissions() {
   const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   container.innerHTML = "";
 
+  document.getElementById("savedCount").innerText = all.length;
+
   if (all.length === 0) {
-    container.innerHTML = `<div class="text-muted">No submissions yet. Fill a form to see saved responses here.</div>`;
+    container.innerHTML = `<div class="text-muted">No saved interests yet. Students can save an opportunity from the board above.</div>`;
     return;
   }
 
   all.forEach((submission, index) => {
-    const form = forms[submission.form_id] || { title: "AI Portal Form" };
+    const opportunity = opportunities[submission.form_id] || { title: "Campus Opportunity" };
     const div = document.createElement("div");
     div.className = "submission";
     div.innerHTML = `
       <div class="d-flex justify-content-between gap-3">
         <div>
-          <strong>${escapeHtml(form.title)}</strong>
+          <strong>${escapeHtml(opportunity.title)}</strong>
           <div class="small text-muted">${new Date(submission.created_at).toLocaleString()}</div>
         </div>
-        <button class="btn btn-sm btn-outline-warning" onclick="deleteSubmission(${index})">Delete</button>
+        <button class="btn btn-sm btn-outline-danger" onclick="deleteSubmission(${index})">Delete</button>
       </div>
-      <div class="mt-2"><strong>${escapeHtml(submission.name)}</strong> - ${escapeHtml(submission.email)}</div>
+      <div class="mt-2"><strong>${escapeHtml(submission.name)}</strong> - ${escapeHtml(submission.department)} - ${escapeHtml(submission.email)}</div>
       <div class="mt-2">${escapeHtml(submission.response)}</div>
     `;
     container.appendChild(div);
   });
+}
+
+function renderMetrics() {
+  document.getElementById("openDrivesCount").innerText = opportunities.filter((item) => item.type !== "Hackathon").length;
+  document.getElementById("hackathonCount").innerText = opportunities.filter((item) => item.type === "Hackathon").length;
 }
 
 function deleteSubmission(index) {
@@ -124,7 +168,7 @@ function deleteSubmission(index) {
 }
 
 function clearAllSubmissions() {
-  if (!confirm("Delete all saved demo submissions?")) return;
+  if (!confirm("Delete all saved demo interests?")) return;
   localStorage.removeItem(STORAGE_KEY);
   renderSubmissions();
 }
@@ -135,7 +179,7 @@ function exportSubmissions() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "ai-learning-submissions.json";
+  link.download = "campus-opportunity-interests.json";
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -160,9 +204,10 @@ document.getElementById("studentForm").addEventListener("submit", (event) => {
   const formId = Number.parseInt(document.getElementById("form_id").value, 10);
   const name = document.getElementById("student_name").value.trim();
   const email = document.getElementById("student_email").value.trim();
+  const department = document.getElementById("student_department").value.trim();
   const response = document.getElementById("student_response").value.trim();
 
-  if (!name || !email || !response) {
+  if (!name || !email || !department || !response) {
     alert("Please fill all fields.");
     return;
   }
@@ -171,6 +216,7 @@ document.getElementById("studentForm").addEventListener("submit", (event) => {
     form_id: formId,
     name,
     email,
+    department,
     response,
     created_at: new Date().toISOString()
   });
@@ -180,14 +226,16 @@ document.getElementById("studentForm").addEventListener("submit", (event) => {
   }
 
   setTimeout(() => {
-    alert("Response submitted successfully.");
+    alert("Interest saved successfully.");
     renderSubmissions();
   }, 200);
 });
 
 document.getElementById("clearBtn").addEventListener("click", clearAllSubmissions);
 document.getElementById("exportBtn").addEventListener("click", exportSubmissions);
+document.getElementById("typeFilter").addEventListener("change", renderOpportunities);
 
 renderNotifications();
-renderForms();
+renderOpportunities();
+renderMetrics();
 renderSubmissions();

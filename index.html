@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Learning & Dataset Submission Portal</title>
+  <title>CampusConnect - Central Opportunity Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
@@ -11,12 +11,12 @@
 <body>
   <nav class="navbar navbar-expand-lg portal-nav">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">AI Learning Portal</a>
+      <a class="navbar-brand fw-bold" href="#">CampusConnect</a>
       <div class="nav-actions">
-        <button id="exportBtn" class="btn btn-sm btn-outline-light" title="Export saved submissions as JSON">
+        <button id="exportBtn" class="btn btn-sm btn-outline-primary" title="Export saved interests as JSON">
           <i class="fa fa-file-export"></i> Export
         </button>
-        <button id="clearBtn" class="btn btn-sm btn-outline-warning" title="Clear local demo submissions">
+        <button id="clearBtn" class="btn btn-sm btn-outline-danger" title="Clear saved demo data">
           <i class="fa fa-trash"></i> Clear
         </button>
       </div>
@@ -25,46 +25,76 @@
 
   <header class="hero-section">
     <div class="container">
-      <span class="hero-badge">HTML CSS JavaScript MySQL</span>
-      <h1>AI Learning & Dataset Submission Portal</h1>
+      <span class="hero-badge">College Placement - Internship - Hackathon Updates</span>
+      <h1>Central campus opportunity portal for every department.</h1>
       <p>
-        A simple student portal for AI/ML workshop registrations, dataset idea collection,
-        mini-project proposals, and data science learning notifications.
+        Instead of relying only on WhatsApp groups, this portal keeps company visits,
+        internship drives, placement forms, and hackathons in one official place so
+        no department misses an important opportunity.
       </p>
       <div class="hero-stats">
-        <span><strong>4</strong> demo forms</span>
-        <span><strong>Local</strong> frontend preview</span>
+        <span><strong>5</strong> active updates</span>
+        <span><strong>All</strong> departments covered</span>
         <span><strong>MySQL</strong> schema included</span>
       </div>
     </div>
   </header>
 
   <main class="container page-content">
+    <section class="row g-3 mb-3">
+      <div class="col-md-4">
+        <div class="metric-card">
+          <span>Open Drives</span>
+          <strong id="openDrivesCount">0</strong>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="metric-card">
+          <span>Hackathons</span>
+          <strong id="hackathonCount">0</strong>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="metric-card">
+          <span>Saved Interests</span>
+          <strong id="savedCount">0</strong>
+        </div>
+      </div>
+    </section>
+
     <section class="row g-4">
       <div class="col-lg-4">
-        <div class="glass-card">
-          <h2 class="section-title">AI Updates</h2>
+        <div class="panel-card">
+          <h2 class="section-title">Latest College Updates</h2>
           <ul id="notificationList" class="list-group list-group-flush"></ul>
         </div>
 
-        <div class="glass-card mt-4">
-          <h2 class="section-title">Project Scope</h2>
+        <div class="panel-card mt-4">
+          <h2 class="section-title">Why This Project?</h2>
           <p class="text-muted mb-0">
-            This is not a real AI model. It is a simple frontend portal that helps
-            collect AI/ML learning forms and student data. A MySQL schema is included
-            for database planning.
+            In many colleges, opportunities are shared department-wise. If one group
+            misses a form, students may lose the chance. This portal centralizes all
+            placement, internship, and hackathon updates with clear deadlines.
           </p>
         </div>
       </div>
 
       <div class="col-lg-8">
-        <div class="glass-card mb-4">
-          <h2 class="section-title">Available AI / Data Science Forms</h2>
-          <div id="formsContainer" class="row gy-3"></div>
+        <div class="panel-card mb-4">
+          <div class="section-row">
+            <h2 class="section-title mb-0">Opportunity Board</h2>
+            <select id="typeFilter" class="form-select form-select-sm">
+              <option value="all">All Updates</option>
+              <option value="Placement">Placement</option>
+              <option value="Internship">Internship</option>
+              <option value="Hackathon">Hackathon</option>
+            </select>
+          </div>
+          <div id="formsContainer" class="row gy-3 mt-1"></div>
         </div>
 
-        <div class="glass-card">
-          <h2 class="section-title">My Submissions</h2>
+        <div class="panel-card">
+          <h2 class="section-title">Saved Student Interests</h2>
           <div id="submissionsContainer"></div>
         </div>
       </div>
@@ -76,7 +106,7 @@
       <div class="modal-content">
         <form id="studentForm">
           <div class="modal-header">
-            <h5 class="modal-title" id="formTitle">Form</h5>
+            <h5 class="modal-title" id="formTitle">Opportunity Form</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -90,12 +120,26 @@
               <input id="student_email" type="email" class="form-control" placeholder="you@example.com" required />
             </div>
             <div class="mb-3">
-              <label for="student_response" class="form-label">Response</label>
-              <textarea id="student_response" class="form-control" rows="4" placeholder="Write your idea, topic, or request" required></textarea>
+              <label for="student_department" class="form-label">Department</label>
+              <select id="student_department" class="form-select" required>
+                <option value="">Select department</option>
+                <option>MCA</option>
+                <option>Computer Science</option>
+                <option>Information Technology</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Electrical</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="student_response" class="form-label">Message</label>
+              <textarea id="student_response" class="form-control" rows="3" placeholder="Write your interest, query, or note" required></textarea>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit Response</button>
+            <button type="submit" class="btn btn-primary">Save Interest</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </form>

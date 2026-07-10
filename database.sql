@@ -1,37 +1,47 @@
-CREATE DATABASE IF NOT EXISTS ai_learning_portal;
-USE ai_learning_portal;
+CREATE DATABASE IF NOT EXISTS campusconnect_portal;
+USE campusconnect_portal;
 
-CREATE TABLE IF NOT EXISTS notifications (
+CREATE TABLE IF NOT EXISTS departments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(120) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS opportunities (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
+    opportunity_type ENUM('Placement', 'Internship', 'Hackathon') NOT NULL,
+    eligible_departments VARCHAR(255) NOT NULL,
+    eligibility TEXT NOT NULL,
     description TEXT NOT NULL,
+    deadline DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS forms (
+CREATE TABLE IF NOT EXISTS student_interests (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS submissions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    form_id INT NOT NULL,
+    opportunity_id INT NOT NULL,
     student_name VARCHAR(120) NOT NULL,
     student_email VARCHAR(160) NOT NULL,
-    response TEXT NOT NULL,
+    department VARCHAR(120) NOT NULL,
+    message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (form_id) REFERENCES forms(id)
+    FOREIGN KEY (opportunity_id) REFERENCES opportunities(id)
 );
 
-INSERT INTO notifications (title, description) VALUES
-('AI/ML Workshop Registration Open', 'Students can register for a beginner-friendly machine learning workshop.'),
-('Dataset Collection Drive', 'Submit dataset ideas for classification, prediction, visualization, or basic analysis.'),
-('Data Science Mini Project Review', 'Share simple AI/ML project ideas for mentor review and feedback.');
+INSERT INTO departments (name) VALUES
+('MCA'),
+('Computer Science'),
+('Information Technology'),
+('Electronics'),
+('Mechanical'),
+('Civil'),
+('Electrical');
 
-INSERT INTO forms (title, description) VALUES
-('AI Workshop Registration', 'Register interest for an introductory AI and machine learning learning session.'),
-('Dataset Idea Submission', 'Submit a dataset idea that can be used for analysis or machine learning practice.'),
-('Mini Project Proposal', 'Share a simple AI, ML, or data science project idea for review.'),
-('Learning Feedback Form', 'Give feedback about AI sessions, datasets, or project guidance.');
+INSERT INTO opportunities
+(title, opportunity_type, eligible_departments, eligibility, description, deadline)
+VALUES
+('TCS Ninja Campus Drive', 'Placement', 'MCA, CSE, IT, ECE', 'Final-year students with basic programming and aptitude preparation.', 'Central listing for the company visit so every eligible department can see and track the form.', '2026-08-12'),
+('AI/Data Analyst Internship', 'Internship', 'MCA, CSE, IT, Mathematics', 'Python basics, SQL basics, and interest in data analysis.', 'Internship update for students who want to work on datasets, dashboards, and AI-assisted analysis.', '2026-08-18'),
+('Smart India Hackathon Registration', 'Hackathon', 'All Departments', 'Teams of students with a project idea and problem statement preference.', 'Hackathon notice board entry so all branches can form teams without depending on separate groups.', '2026-08-20'),
+('Startup Product Challenge', 'Hackathon', 'All Departments', 'Students with web, app, AI, design, or presentation skills.', 'College-level innovation challenge for building practical prototypes and pitching ideas.', '2026-08-28'),
+('Java Full Stack Trainee Drive', 'Placement', 'MCA, CSE, IT', 'Java, OOPS, DBMS, SQL, and basic web development knowledge.', 'Company update for Java trainee roles with placement form visibility across eligible departments.', '2026-09-02');
