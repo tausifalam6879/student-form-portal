@@ -1,16 +1,16 @@
 :root {
   --bg: #f4f7fb;
-  --panel: #f9dbe9;
-  --panel-soft: #fde8f2;
-  --card-panel: #f8d5e6;
-  --border: #d98ab1;
+  --panel: #ce76a4;
+  --panel-soft: #e8aac8;
+  --card-panel: #ce76a4;
+  --border: #b85d8c;
   --primary: #1f65d6;
   --primary-soft: #eaf2ff;
   --success: #14845c;
   --warning: #a16207;
   --text: #172033;
   --muted: #667085;
-  --shadow: 0 12px 28px rgba(143, 69, 108, 0.16);
+  --shadow: 0 14px 30px rgba(102, 34, 70, 0.2);
 }
 
 * {
@@ -92,7 +92,7 @@ body {
 .hero-stats span {
   padding: 9px 12px;
   border-radius: 10px;
-  color: var(--muted);
+  color: #1f1730;
 }
 
 .hero-stats strong,
@@ -114,7 +114,7 @@ body {
 }
 
 .metric-card span {
-  color: var(--muted);
+  color: #1f1730;
   font-weight: 600;
 }
 
@@ -164,14 +164,14 @@ body {
 
 .small-muted,
 .text-muted {
-  color: var(--muted) !important;
+  color: #41304a !important;
 }
 
 .form-card {
   height: 100%;
   padding: 14px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--card-panel), #fff1f8) !important;
+  background: var(--card-panel) !important;
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
@@ -179,7 +179,7 @@ body {
 .form-card:hover,
 .form-card:focus {
   transform: translateY(-3px);
-  border-color: #d58caf;
+  border-color: #93406e;
   outline: none;
 }
 
@@ -203,7 +203,7 @@ body {
   display: flex;
   gap: 8px;
   margin-top: 8px;
-  color: var(--muted);
+  color: #41304a;
   font-size: 0.88rem;
 }
 
@@ -236,7 +236,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 6px 14px;
-  color: var(--muted);
+  color: #41304a;
   font-size: 0.88rem;
 }
 
@@ -257,7 +257,7 @@ body {
 }
 
 .summary-text {
-  color: var(--muted);
+  color: #41304a;
   font-size: 0.9rem;
   line-height: 1.55;
 }
@@ -278,23 +278,23 @@ body {
 .modal-content {
   border: 1px solid var(--border);
   border-radius: 14px;
-  background: #fde8f2 !important;
+  background: #ce76a4 !important;
 }
 
 .modal-header,
 .modal-footer {
-  background: #f9dbe9 !important;
+  background: #ce76a4 !important;
   border-color: var(--border);
 }
 
 .modal-body {
-  background: #fde8f2 !important;
+  background: #e8aac8 !important;
 }
 
 .form-control,
 .form-select {
   border-color: var(--border);
-  background-color: #fff7fb;
+  background-color: #fff0f7;
 }
 
 .form-control:focus,
