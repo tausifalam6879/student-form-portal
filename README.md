@@ -18,6 +18,8 @@ CampusConnect solves this by keeping all placement, internship, and hackathon up
 - Lists internship updates with eligibility and deadlines
 - Lists hackathon opportunities for all departments
 - Shows eligible departments for each opportunity
+- Loads opportunity data from a CSV file
+- Redirects opportunity cards to official company or hackathon websites
 - Allows students to save interest in an opportunity
 - Provides an AI-style recommendation demo based on department, skills, and interest
 - Shows eligibility matching, deadline priority, skill gaps, and short opportunity summaries
@@ -51,6 +53,7 @@ student-form-portal/
 |-- index.html
 |-- style.css
 |-- script.js
+|-- opportunities.csv
 |-- database.sql
 |-- README.md
 ```
@@ -66,5 +69,9 @@ The `database.sql` file contains tables for:
 - departments
 - opportunities
 - student_interests
+
+## CSV Data Source
+
+The `opportunities.csv` file stores demo opportunity data with title, type, departments, deadline, skills, eligibility, description, and official link. This makes the project easier to update like a real campus notice board.
 
 Important: The current frontend demo uses localStorage. To store data in MySQL in real time, a backend such as Java Spring Boot or Node.js can be added later.

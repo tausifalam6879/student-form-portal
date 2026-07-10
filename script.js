@@ -13,56 +13,68 @@ const notifications = [
   }
 ];
 
-const opportunities = [
+let opportunities = [];
+
+const fallbackOpportunities = [
   {
     title: "TCS Ninja Campus Drive",
     type: "Placement",
-    department: "MCA, CSE, IT, ECE",
+    departments: ["MCA", "Computer Science", "Information Technology", "Electronics"],
+    department: "MCA, Computer Science, Information Technology, Electronics",
     deadline: "12 Aug 2026",
     deadlineDate: "2026-08-12",
     skills: ["programming", "aptitude", "sql"],
     eligibility: "Final-year students with basic programming and aptitude preparation.",
-    description: "Central listing for the company visit so every eligible department can see and track the form."
+    description: "Central listing for the company visit so every eligible department can see and track the form.",
+    link: "https://www.tcs.com/careers/india"
   },
   {
     title: "AI/Data Analyst Internship",
     type: "Internship",
-    department: "MCA, CSE, IT, Mathematics",
+    departments: ["MCA", "Computer Science", "Information Technology", "Mathematics"],
+    department: "MCA, Computer Science, Information Technology, Mathematics",
     deadline: "18 Aug 2026",
     deadlineDate: "2026-08-18",
     skills: ["python", "sql", "data analysis", "machine learning"],
     eligibility: "Python basics, SQL basics, and interest in data analysis.",
-    description: "Internship update for students who want to work on datasets, dashboards, and AI-assisted analysis."
+    description: "Internship update for students who want to work on datasets, dashboards, and AI-assisted analysis.",
+    link: "https://internshala.com/internships/data-science-internship/"
   },
   {
     title: "Smart India Hackathon Registration",
     type: "Hackathon",
+    departments: ["All Departments"],
     department: "All Departments",
     deadline: "20 Aug 2026",
     deadlineDate: "2026-08-20",
     skills: ["problem solving", "presentation", "prototype"],
     eligibility: "Teams of students with a project idea and problem statement preference.",
-    description: "Hackathon notice board entry so all branches can form teams without depending on separate groups."
+    description: "Hackathon notice board entry so all branches can form teams without depending on separate groups.",
+    link: "https://www.sih.gov.in/"
   },
   {
     title: "Startup Product Challenge",
     type: "Hackathon",
+    departments: ["All Departments"],
     department: "All Departments",
     deadline: "28 Aug 2026",
     deadlineDate: "2026-08-28",
     skills: ["web", "app", "ai", "design", "presentation"],
     eligibility: "Students with web, app, AI, design, or presentation skills.",
-    description: "A college-level innovation challenge for building practical prototypes and pitching ideas."
+    description: "A college-level innovation challenge for building practical prototypes and pitching ideas.",
+    link: "https://devfolio.co/hackathons"
   },
   {
     title: "Java Full Stack Trainee Drive",
     type: "Placement",
-    department: "MCA, CSE, IT",
+    departments: ["MCA", "Computer Science", "Information Technology"],
+    department: "MCA, Computer Science, Information Technology",
     deadline: "02 Sep 2026",
     deadlineDate: "2026-09-02",
     skills: ["java", "oops", "dbms", "sql", "web development"],
     eligibility: "Java, OOPS, DBMS, SQL, and basic web development knowledge.",
-    description: "Company update for Java trainee roles with placement form visibility across eligible departments."
+    description: "Company update for Java trainee roles with placement form visibility across eligible departments.",
+    link: "https://www.naukri.com/java-full-stack-developer-jobs"
   }
 ];
 
@@ -83,6 +95,94 @@ function renderNotifications() {
   });
 }
 
+async function loadOpportunities() {
+  try {
+    const response = await fetch("opportunities.csv", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("CSV file not available");
+    }
+
+    const csv = await response.text();
+    opportunities = parseCsv(csv).map(normalizeOpportunity);
+  } catch (error) {
+    opportunities = fallbackOpportunities;
+  }
+
+  renderOpportunities();
+  renderMetrics();
+  renderSubmissions();
+  runAiAnalysis();
+}
+
+function parseCsv(csv) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let insideQuotes = false;
+
+  for (let index = 0; index < csv.length; index++) {
+    const char = csv[index];
+    const nextChar = csv[index + 1];
+
+    if (char === '"' && nextChar === '"') {
+      value += '"';
+      index++;
+    } else if (char === '"') {
+      insideQuotes = !insideQuotes;
+    } else if (char === "," && !insideQuotes) {
+      row.push(value);
+      value = "";
+    } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+      if (value || row.length) {
+        row.push(value);
+        rows.push(row);
+        row = [];
+        value = "";
+      }
+
+      if (char === "\r" && nextChar === "\n") {
+        index++;
+      }
+    } else {
+      value += char;
+    }
+  }
+
+  if (value || row.length) {
+    row.push(value);
+    rows.push(row);
+  }
+
+  const headers = rows.shift().map((header) => header.trim());
+  return rows
+    .filter((items) => items.some(Boolean))
+    .map((items) => Object.fromEntries(headers.map((header, index) => [header, items[index] || ""])));
+}
+
+function normalizeOpportunity(item) {
+  const departments = splitList(item.departments);
+
+  return {
+    title: item.title,
+    type: item.type,
+    departments,
+    department: departments.join(", "),
+    deadline: item.deadline,
+    deadlineDate: item.deadlineDate,
+    skills: splitList(item.skills).map((skill) => skill.toLowerCase()),
+    eligibility: item.eligibility,
+    description: item.description,
+    link: item.link
+  };
+}
+
+function splitList(value) {
+  return String(value || "")
+    .split(";")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
 function renderOpportunities() {
   const container = document.getElementById("formsContainer");
   const selectedType = document.getElementById("typeFilter").value;
@@ -97,7 +197,7 @@ function renderOpportunities() {
     const col = document.createElement("div");
     col.className = "col-md-6";
     col.innerHTML = `
-      <div class="form-card">
+      <div class="form-card" role="button" tabindex="0" onclick="openOpportunityLink(${index})" onkeydown="handleCardKey(event, ${index})">
         <div class="d-flex justify-content-between align-items-start gap-2">
           <h3 class="form-card-title h6">${escapeHtml(opportunity.title)}</h3>
           <span class="badge-type">${escapeHtml(opportunity.type)}</span>
@@ -106,11 +206,28 @@ function renderOpportunities() {
         <div class="detail-line"><i class="fa fa-building-columns"></i><span>${escapeHtml(opportunity.department)}</span></div>
         <div class="detail-line"><i class="fa fa-calendar-days"></i><span>Deadline: ${escapeHtml(opportunity.deadline)}</span></div>
         <div class="detail-line"><i class="fa fa-check-circle"></i><span>${escapeHtml(opportunity.eligibility)}</span></div>
-        <button class="btn btn-sm btn-success mt-3" onclick="openForm(${index})">Save Interest</button>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+          <button class="btn btn-sm btn-success" onclick="event.stopPropagation(); openForm(${index})">Save Interest</button>
+          <a class="btn btn-sm btn-outline-primary" href="${escapeHtml(opportunity.link)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Official Link</a>
+        </div>
       </div>
     `;
     container.appendChild(col);
   });
+}
+
+function openOpportunityLink(index) {
+  const opportunity = opportunities[index];
+  if (opportunity?.link) {
+    window.open(opportunity.link, "_blank", "noopener,noreferrer");
+  }
+}
+
+function handleCardKey(event, index) {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openOpportunityLink(index);
+  }
 }
 
 let currentModalInstance = null;
@@ -263,6 +380,7 @@ function renderAiResults(results, department) {
           <span><b>Skill Gap:</b> ${escapeHtml(gapText)}</span>
         </div>
         <p class="summary-text mb-0 mt-2"><b>Summary:</b> ${escapeHtml(summary)}</p>
+        <a class="btn btn-sm btn-outline-primary mt-2" href="${escapeHtml(result.link)}" target="_blank" rel="noopener noreferrer">Open Official Link</a>
       </article>
     `;
   }).join("");
@@ -345,7 +463,4 @@ document.getElementById("typeFilter").addEventListener("change", renderOpportuni
 document.getElementById("runAiBtn").addEventListener("click", runAiAnalysis);
 
 renderNotifications();
-renderOpportunities();
-renderMetrics();
-renderSubmissions();
-runAiAnalysis();
+loadOpportunities();

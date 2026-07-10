@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS opportunities (
     required_skills VARCHAR(255) NOT NULL,
     eligibility TEXT NOT NULL,
     description TEXT NOT NULL,
+    link VARCHAR(500) NOT NULL,
     deadline DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -39,10 +40,10 @@ INSERT INTO departments (name) VALUES
 ('Electrical');
 
 INSERT INTO opportunities
-(title, opportunity_type, eligible_departments, required_skills, eligibility, description, deadline)
+(title, opportunity_type, eligible_departments, required_skills, eligibility, description, link, deadline)
 VALUES
-('TCS Ninja Campus Drive', 'Placement', 'MCA, CSE, IT, ECE', 'programming, aptitude, sql', 'Final-year students with basic programming and aptitude preparation.', 'Central listing for the company visit so every eligible department can see and track the form.', '2026-08-12'),
-('AI/Data Analyst Internship', 'Internship', 'MCA, CSE, IT, Mathematics', 'python, sql, data analysis, machine learning', 'Python basics, SQL basics, and interest in data analysis.', 'Internship update for students who want to work on datasets, dashboards, and AI-assisted analysis.', '2026-08-18'),
-('Smart India Hackathon Registration', 'Hackathon', 'All Departments', 'problem solving, presentation, prototype', 'Teams of students with a project idea and problem statement preference.', 'Hackathon notice board entry so all branches can form teams without depending on separate groups.', '2026-08-20'),
-('Startup Product Challenge', 'Hackathon', 'All Departments', 'web, app, ai, design, presentation', 'Students with web, app, AI, design, or presentation skills.', 'College-level innovation challenge for building practical prototypes and pitching ideas.', '2026-08-28'),
-('Java Full Stack Trainee Drive', 'Placement', 'MCA, CSE, IT', 'java, oops, dbms, sql, web development', 'Java, OOPS, DBMS, SQL, and basic web development knowledge.', 'Company update for Java trainee roles with placement form visibility across eligible departments.', '2026-09-02');
+('TCS Ninja Campus Drive', 'Placement', 'MCA, CSE, IT, ECE', 'programming, aptitude, sql', 'Final-year students with basic programming and aptitude preparation.', 'Central listing for the company visit so every eligible department can see and track the form.', 'https://www.tcs.com/careers/india', '2026-08-12'),
+('AI/Data Analyst Internship', 'Internship', 'MCA, CSE, IT, Mathematics', 'python, sql, data analysis, machine learning', 'Python basics, SQL basics, and interest in data analysis.', 'Internship update for students who want to work on datasets, dashboards, and AI-assisted analysis.', 'https://internshala.com/internships/data-science-internship/', '2026-08-18'),
+('Smart India Hackathon Registration', 'Hackathon', 'All Departments', 'problem solving, presentation, prototype', 'Teams of students with a project idea and problem statement preference.', 'Hackathon notice board entry so all branches can form teams without depending on separate groups.', 'https://www.sih.gov.in/', '2026-08-20'),
+('Startup Product Challenge', 'Hackathon', 'All Departments', 'web, app, ai, design, presentation', 'Students with web, app, AI, design, or presentation skills.', 'College-level innovation challenge for building practical prototypes and pitching ideas.', 'https://devfolio.co/hackathons', '2026-08-28'),
+('Java Full Stack Trainee Drive', 'Placement', 'MCA, CSE, IT', 'java, oops, dbms, sql, web development', 'Java, OOPS, DBMS, SQL, and basic web development knowledge.', 'Company update for Java trainee roles with placement form visibility across eligible departments.', 'https://www.naukri.com/java-full-stack-developer-jobs', '2026-09-02');
