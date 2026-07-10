@@ -1,16 +1,16 @@
 :root {
   --bg: #f4f7fb;
-  --panel: #fff0f7;
-  --panel-soft: #fff7fc;
-  --card-panel: #fff3fa;
-  --border: #e7bfd2;
+  --panel: #f9dbe9;
+  --panel-soft: #fde8f2;
+  --card-panel: #f8d5e6;
+  --border: #d98ab1;
   --primary: #1f65d6;
   --primary-soft: #eaf2ff;
   --success: #14845c;
   --warning: #a16207;
   --text: #172033;
   --muted: #667085;
-  --shadow: 0 10px 24px rgba(143, 69, 108, 0.1);
+  --shadow: 0 12px 28px rgba(143, 69, 108, 0.16);
 }
 
 * {
@@ -85,7 +85,7 @@ body {
 .form-card,
 .submission {
   border: 1px solid var(--border);
-  background: var(--panel);
+  background: var(--panel) !important;
   box-shadow: var(--shadow);
 }
 
@@ -171,7 +171,7 @@ body {
   height: 100%;
   padding: 14px;
   border-radius: 12px;
-  background: var(--card-panel);
+  background: linear-gradient(135deg, var(--card-panel), #fff1f8) !important;
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
@@ -229,7 +229,7 @@ body {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: var(--panel-soft);
+  background: var(--panel-soft) !important;
 }
 
 .ai-grid {
@@ -278,11 +278,23 @@ body {
 .modal-content {
   border: 1px solid var(--border);
   border-radius: 14px;
+  background: #fde8f2 !important;
+}
+
+.modal-header,
+.modal-footer {
+  background: #f9dbe9 !important;
+  border-color: var(--border);
+}
+
+.modal-body {
+  background: #fde8f2 !important;
 }
 
 .form-control,
 .form-select {
   border-color: var(--border);
+  background-color: #fff7fb;
 }
 
 .form-control:focus,
